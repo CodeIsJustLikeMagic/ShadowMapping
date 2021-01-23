@@ -4,6 +4,21 @@
     <ClCompile Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src\ShadowMapping.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src\controls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src\objloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src\vboindexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\CMakeLists.txt" />

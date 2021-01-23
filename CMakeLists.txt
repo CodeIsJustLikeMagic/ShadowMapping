@@ -30,6 +30,11 @@ add_subdirectory(${MY_PROJECT_INCLUDE_DIR}/glfw-3.1.2)
 SET(MY_SOURCE_FILES
 
     ${MY_PROJECT_SOURCE_DIR}/ShadowMapping.cpp
+    ${MY_PROJECT_SOURCE_DIR}/texture.cpp
+    ${MY_PROJECT_SOURCE_DIR}/controls.cpp
+    ${MY_PROJECT_SOURCE_DIR}/objloader.cpp
+    ${MY_PROJECT_SOURCE_DIR}/shader.cpp
+    ${MY_PROJECT_SOURCE_DIR}/vboindexer.cpp
     
 )
 INCLUDE_DIRECTORIES(

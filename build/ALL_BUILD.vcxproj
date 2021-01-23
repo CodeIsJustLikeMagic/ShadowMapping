@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glew-1.13.0\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -76,7 +76,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glew-1.13.0\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -86,7 +86,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glew-1.13.0\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -96,7 +96,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glew-1.13.0\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\src;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\AntTweakBar-1.16\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glfw-3.1.2\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\glm-0.9.7.1;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\assimp-3.0.1270\include;D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\external\bullet-2.81-rev2613\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -170,9 +170,113 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\GLAD.vcxproj">
+      <Project>{6D593AEF-3B80-3919-A45C-B1548B7208CD}</Project>
+      <Name>GLAD</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\STB_IMAGE.vcxproj">
+      <Project>{92856BBB-3B76-33C7-AF6F-E898DED09C61}</Project>
+      <Name>STB_IMAGE</Name>
+    </ProjectReference>
     <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\ShadowMapping.vcxproj">
       <Project>{13302EEB-75B7-3BFF-8EB8-5BD3A83C994C}</Project>
       <Name>ShadowMapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\boing.vcxproj">
+      <Project>{DB66AAB9-495D-3CF3-81E3-4F4491C6F07B}</Project>
+      <Name>boing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\clipboard.vcxproj">
+      <Project>{5EF23BB1-C264-3740-82ED-3F8B5AC97B45}</Project>
+      <Name>clipboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\cursor.vcxproj">
+      <Project>{A769C39C-5FB5-3A08-9DEF-6A96AF0B33EE}</Project>
+      <Name>cursor</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\empty.vcxproj">
+      <Project>{8E05B96C-C9C2-35D3-8393-F73FFA2B1FFD}</Project>
+      <Name>empty</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\events.vcxproj">
+      <Project>{CF32B46A-BE80-3D0C-B05F-F90D2D258184}</Project>
+      <Name>events</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\gamma.vcxproj">
+      <Project>{6B2FE6FE-2877-351E-8038-AD3FD3EE430E}</Project>
+      <Name>gamma</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\gears.vcxproj">
+      <Project>{CBCE6E84-310B-3AE8-83FC-B2BD86762FA9}</Project>
+      <Name>gears</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\src\glfw.vcxproj">
+      <Project>{510AE180-FF70-3A09-A7CA-5204DC429524}</Project>
+      <Name>glfw</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\glfwinfo.vcxproj">
+      <Project>{2C1AB830-B4CE-3566-9090-C2F12F354751}</Project>
+      <Name>glfwinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\heightmap.vcxproj">
+      <Project>{D7E151A5-0191-36B2-9753-B22E7B8BBF7A}</Project>
+      <Name>heightmap</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\iconify.vcxproj">
+      <Project>{0EBD545B-36BE-37CA-ADEC-382A64DED8D9}</Project>
+      <Name>iconify</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\joysticks.vcxproj">
+      <Project>{9B518BB8-A727-3949-A8DF-24312907F39B}</Project>
+      <Name>joysticks</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\monitors.vcxproj">
+      <Project>{9697F808-06F0-30C4-861F-1AB5822928B6}</Project>
+      <Name>monitors</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\msaa.vcxproj">
+      <Project>{B4AB40C6-239F-328C-B5C7-1A1E7156B180}</Project>
+      <Name>msaa</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\particles.vcxproj">
+      <Project>{AA9FCC26-26AE-30CB-A7EC-1B7A00409B1B}</Project>
+      <Name>particles</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\reopen.vcxproj">
+      <Project>{E85F0CF7-7500-3A71-B1DD-7428DCB82402}</Project>
+      <Name>reopen</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\sharing.vcxproj">
+      <Project>{47ABAA3C-AB6C-3D90-9F42-E75CBEE660CE}</Project>
+      <Name>sharing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\simple.vcxproj">
+      <Project>{771650DE-5AB0-3170-8811-6F52DA60B22E}</Project>
+      <Name>simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\splitview.vcxproj">
+      <Project>{E71142A7-B5A5-3005-9C4F-A5F0887F65E1}</Project>
+      <Name>splitview</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\tearing.vcxproj">
+      <Project>{CA3F4241-A398-3F2F-BBB6-D20E21467709}</Project>
+      <Name>tearing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\threads.vcxproj">
+      <Project>{BC38D99E-2ECB-3A59-BF6D-4A33099E5357}</Project>
+      <Name>threads</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\title.vcxproj">
+      <Project>{452FE2AF-E852-3DEF-B909-658DB531CFF0}</Project>
+      <Name>title</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\examples\wave.vcxproj">
+      <Project>{1DCEEE5F-8526-3C35-8C77-7CB75B2178D6}</Project>
+      <Name>wave</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\include\glfw-3.1.2\tests\windows.vcxproj">
+      <Project>{D15E4757-336F-39A7-8845-E169EF047790}</Project>
+      <Name>windows</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
