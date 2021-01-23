@@ -1,0 +1,7 @@
+#version 330 core
+
+void main()//second shader that is run
+{             
+    // gl_FragDepth = gl_FragCoord.z; //this line is unnessesary since this is done behind the scenes anyway
+} //empty fragment shader since we dont care about color and have no color buffer
+//after this shader is run, and does nothing, the depht buffer is updated

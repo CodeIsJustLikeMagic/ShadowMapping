@@ -1,0 +1,11 @@
+#version 330 core
+
+layout (location = 0) in vec3 aPos;
+
+uniform mat4 lightSpaceMatrix;
+uniform mat4 model;
+
+void main()//is vertex shader. first shader that is run
+{
+    gl_Position = lightSpaceMatrix * model * vec4(aPos, 1.0);
+}//transform all vertices to light space wusing lightSpaceMatrix from the main script
