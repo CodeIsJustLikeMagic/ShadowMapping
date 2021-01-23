@@ -30,20 +30,39 @@ SET(MY_SOURCE_FILES
     ${MY_PROJECT_SOURCE_DIR}/ShadowMapping.cpp
     
 )
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-# OpenGL
-find_package(OpenGL REQUIRED)
-find_package(ASSIMP REQUIRED)
-message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
-# Put all libraries into a variable
-set(opengl32 assimp)
 INCLUDE_DIRECTORIES(
 
     ${MY_PROJECT_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/src
 	${CMAKE_SOURCE_DIR}/include
+    external/AntTweakBar-1.16/include/
+	external/glfw-3.1.2/include/
+	external/glm-0.9.7.1/
+	external/glew-1.13.0/include/
+	external/assimp-3.0.1270/include/
+	external/bullet-2.81-rev2613/src/
 
 )
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+# OpenGL
+find_package(OpenGL REQUIRED)
+# GLM
+find_package(GLM REQUIRED)
+message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
+# GLFW
+#find_package(GLFW 3.0 REQUIRED)
+#message(STATUS "Found GLFW3 in ${GLFW3_INCLUDE_DIR}")
+find_package(ASSIMP REQUIRED)
+message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
+# Put all libraries into a variable
+
+# STB_IMAGE
+#add_library(STB_IMAGE "include/stb_image.h")
+
+# GLAD
+#add_library(GLAD "include/glad/glad.h")
+
+set(LIBS opengl32 assimp) #STB_IMAGE GLAD)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 
