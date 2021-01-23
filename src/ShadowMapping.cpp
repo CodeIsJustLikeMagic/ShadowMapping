@@ -1,15 +1,18 @@
 ﻿// ShadowMapping.cpp : Defines the entry point for the application.
 //
 
-#include "ShadowMapping.h"
-#include <iostream>
-#include <fstream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include<iostream>
+#include<fstream>
+#include<sstream>
+#include<glad/glad.h>
+#include<GLFW/glfw3.h>
+#include <stdlib.h>
+
+#include<vector>
 
 #define  GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include<glm/glm.hpp>
+#include<glm/gtc/matrix_transform.hpp>
 
 
 using namespace std;
@@ -53,27 +56,62 @@ int main()
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
 	//render to depth map (using a simpler vertex shader for rendering to depth map than you would use for color caluclations)
+	
 
-	simpleDepthShader.use();
+	
+	//glUseProgram(LoadShaders("simpleDepthShader.txt", "FragmentShader.txt"));
 
 
 
 	// 1. first render to depth map
+
+	GLuint simpleDepthShader = LoadShaders("simpleDepthShader.txt", "FragmentShader.txt");
+	glUseProgram(simpleDepthShader);
+	glUniformMatrix4fv(lightSpaceMatrixLocation, 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
+
 	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	ConfigureShaderAndMatrices();
-	RenderScene();
+	RenderScene(simpleDepthShader);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
 	// 2. then render scene as normal with shadow mapping (using depth map)
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	ConfigureShaderAndMatrices();
-	glBindTexture(GL_TEXTURE_2D, depthMap);
-	RenderScene();
+	//glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//ConfigureShaderAndMatrices();
+	//glBindTexture(GL_TEXTURE_2D, depthMap);
+	//RenderScene();
 
 	return 0;
 }
+
+void RenderScene(GLuint shaderprogramm) {
+	//call all relevant drawing functions and set corespoinding model matrices where nessesary
+
+
+	//result should be a depth buffer holding the closest depth of each visible fragment from the lights perspective
+}
+
+
+//static GLuint make_shader(GLenum type, const char* filename) {
+//	GLint length, shader_ok;
+//	GLchar* source = file_contents(filename, &length);
+//	GLuint shader;
+//
+//	if (!source) return 0;
+//	shader = glCreateShader(type);
+//	glShaderSource(shader, 1, (const GLchar**)& source, & length);
+//	free(source);
+//	glCompileShader(shader);
+//	glGetShaderiv(shader, GL_COMPILE_STATUS, &shader_ok);
+//	if (!shader_ok) {
+//		fprintf(stderr, "Failed to compile%s:\n", filename);
+//		glDeleteShader(shader);
+//		return 0;
+//	}
+//	return shader;
+//}
 
 GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path) {
 
