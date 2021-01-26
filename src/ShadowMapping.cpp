@@ -143,76 +143,55 @@ int main(void)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 
 
-	// ---------------------------------------------
-	// Render to Texture - specific code begins here
-	// ---------------------------------------------
+
+
+
+	// ------Render to Depth Texture aka the Shadow Map -----------------------------
 
 	// The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
 	GLuint FramebufferName = 0;
 	glGenFramebuffers(1, &FramebufferName);
 	glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
 
-	// Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+	// Depth texture that we want to sample later. 
 	GLuint depthTexture;
 	glGenTextures(1, &depthTexture);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	glBindTexture(GL_TEXTURE_2D, depthTexture); // now depth Texture is bound to the target GL_Texture2D. you can only have one bound texture per target
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0); //defines a Texture image with a bunch of parameters like level or detail
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE); //hmm I commented this out. maybe that is bad
 
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0); //add our depthTexure to the framebuffer so it can be used
 
 	// No color output in the bound framebuffer, only depth.
-	glDrawBuffer(GL_NONE);
+	glDrawBuffer(GL_NONE); //no color buffer,pls. thank you
 
 	// Always check that our framebuffer is ok
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		return false;
 
 
-	// The quad's FBO. Used only for visualizing the shadowmap.
-	static const GLfloat g_quad_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		 1.0f,  1.0f, 0.0f,
-	};
-
-	GLuint quad_vertexbuffer;
-	glGenBuffers(1, &quad_vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_quad_vertex_buffer_data), g_quad_vertex_buffer_data, GL_STATIC_DRAW);
-
 	// Create and compile our GLSL program from the shaders
-	GLuint quad_programID = LoadShaders("Passthrough.vertexshader", "SimpleTexture.fragmentshader");
-	GLuint texID = glGetUniformLocation(quad_programID, "texture");
-
-
-	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("ShadowMapping.vertexshader", "ShadowMapping.fragmentshader");
+	GLuint programID = LoadShaders("ShadowMapping_SimpleVersion.vertexshader", "ShadowMapping_SimpleVersion.fragmentshader");
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
-	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 	GLuint DepthBiasID = glGetUniformLocation(programID, "DepthBiasMVP");
 	GLuint ShadowMapID = glGetUniformLocation(programID, "shadowMap");
 
-	// Get a handle for our "LightPosition" uniform
-	GLuint lightInvDirID = glGetUniformLocation(programID, "LightInvDirection_worldspace");
 
 
-
-	do {
+	//we have two shader programms. dephprogramID, which a vertexshader that only cares about depth, and a fragmentshader that does nothing
+	//we also have pogramID, which renders colors, polls the depth texture and renderes the shadows.
+	do {// render a frame
 
 		// Render to our framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
@@ -223,28 +202,22 @@ int main(void)
 		// (if your geometry is made this way)
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
-
-		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Use our shader
+		// Use our depth shader
 		glUseProgram(depthProgramID);
 
+		
 		glm::vec3 lightInvDir = glm::vec3(0.5f, 2, 2);
 
 		// Compute the MVP matrix from the light's point of view
 		glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10, 10, -10, 10, -10, 20);
 		glm::mat4 depthViewMatrix = glm::lookAt(lightInvDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-		// or, for spot light :
-		//glm::vec3 lightPos(5, 20, 20);
-		//glm::mat4 depthProjectionMatrix = glm::perspective<float>(45.0f, 1.0f, 2.0f, 50.0f);
-		//glm::mat4 depthViewMatrix = glm::lookAt(lightPos, lightPos-lightInvDir, glm::vec3(0,1,0));
-
 		glm::mat4 depthModelMatrix = glm::mat4(1.0);
-		glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
+		glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix; //depth model view projection matrix
 
-		// Send our transformation to the currently bound shader, 
-		// in the "MVP" uniform
+		// Send our transformation to the currently bound shader, which is the depth vertex shader and the empty fragment shader
+		// depth vertex shader uses depthMVP to transform vertex position into light space
 		glUniformMatrix4fv(depthMatrixID, 1, GL_FALSE, &depthMVP[0][0]);
 
 		// 1rst attribute buffer : vertices
@@ -262,7 +235,7 @@ int main(void)
 		// Index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-		// Draw the triangles !
+		// Draw the triangles of the shadow map
 		glDrawElements(
 			GL_TRIANGLES,      // mode
 			indices.size(),    // count
@@ -272,7 +245,9 @@ int main(void)
 
 		glDisableVertexAttribArray(0);
 
-
+		//-------we are done with creating the shadow texture now -------------
+		//next we render the scene
+		//use usual shader. For each fragment check if it is behind the shadow map or not
 
 		// Render to the screen
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -288,7 +263,7 @@ int main(void)
 		glUseProgram(programID);
 
 		// Compute the MVP matrix from keyboard and mouse input
-		computeMatricesFromInputs();
+		computeMatricesFromInputs(); //set viewpoint of the camera based on mouse and keyboard input. use arrow keys to move
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
 		glm::mat4 ViewMatrix = getViewMatrix();
 		//ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
@@ -300,18 +275,19 @@ int main(void)
 			0.0, 0.5, 0.0, 0.0,
 			0.0, 0.0, 0.5, 0.0,
 			0.5, 0.5, 0.5, 1.0
-		);
+		); //multiplying vertex position by depth mvp gives values of -1 to 1. that is not usefull for texture sampling which is 0 to 1. 
+		//multipliying with this matri makes sure our results are allways 0 to 1
+		//also makes sure the UV coordinates get called correctly.
+		//middle of camera screen is 0,0 but middle of texture is 0.5,0.5
 
 		glm::mat4 depthBiasMVP = biasMatrix * depthMVP;
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
-		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]); //shader gets both camera mvp and depth mvp. 
+		//neeeds depth mvp so it can look at the fragments from lights point of view to see where they are on the shadow texture
+		//that way it can tell if they are in shadow or not.
 		glUniformMatrix4fv(DepthBiasID, 1, GL_FALSE, &depthBiasMVP[0][0]);
-
-		glUniform3f(lightInvDirID, lightInvDir.x, lightInvDir.y, lightInvDir.z);
 
 		// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
@@ -320,7 +296,7 @@ int main(void)
 		glUniform1i(TextureID, 0);
 
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, depthTexture);
+		glBindTexture(GL_TEXTURE_2D, depthTexture); //bind shadow texture
 		glUniform1i(ShadowMapID, 1);
 
 		// 1rst attribute buffer : vertices
@@ -362,7 +338,7 @@ int main(void)
 		// Index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-		// Draw the triangles !
+		// Draw the triangles of our imported .obj file
 		glDrawElements(
 			GL_TRIANGLES,      // mode
 			indices.size(),    // count
@@ -373,38 +349,6 @@ int main(void)
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
-
-
-		// Optionally render the shadowmap (for debug only)
-
-		// Render only on a corner of the window (or we we won't see the real rendering...)
-		glViewport(0, 0, 512, 512);
-
-		// Use our shader
-		glUseProgram(quad_programID);
-
-		// Bind our texture in Texture Unit 0
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, depthTexture);
-		// Set our "renderedTexture" sampler to use Texture Unit 0
-		glUniform1i(texID, 0);
-
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-
-		// Draw the triangle !
-		// You have to disable GL_COMPARE_R_TO_TEXTURE above in order to see anything !
-		//glDrawArrays(GL_TRIANGLES, 0, 6); // 2*3 indices starting at 0 -> 2 triangles
-		glDisableVertexAttribArray(0);
 
 
 		// Swap buffers
@@ -422,13 +366,10 @@ int main(void)
 	glDeleteBuffers(1, &elementbuffer);
 	glDeleteProgram(programID);
 	glDeleteProgram(depthProgramID);
-	glDeleteProgram(quad_programID);
 	glDeleteTextures(1, &Texture);
 
 	glDeleteFramebuffers(1, &FramebufferName);
 	glDeleteTextures(1, &depthTexture);
-	glDeleteBuffers(1, &quad_vertexbuffer);
-	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
