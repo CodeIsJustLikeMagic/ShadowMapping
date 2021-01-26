@@ -99,7 +99,7 @@ int main(void)
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint depthProgramID = LoadShaders("../Shaders/DepthRTT.vertexshader", "../Shaders/DepthRTT.fragmentshader");
+	GLuint depthProgramID = LoadShaders("../Shaders/DepthShaderLightSpaceTransform.vertexshader", "../Shaders/DepthShaderDepthToTexture.fragmentshader");
 
 	// Get a handle for our "MVP" uniform
 	GLuint depthMatrixID = glGetUniformLocation(depthProgramID, "depthMVP");
@@ -174,7 +174,7 @@ int main(void)
 
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("../Shaders/ShadowMapping_SimpleVersion.vertexshader", "../Shaders/ShadowMapping_SimpleVersion.fragmentshader");
+	GLuint programID = LoadShaders("../Shaders/ShadowMappingVertex.vertexshader", "../Shaders/ShadowMappingFragment.fragmentshader");
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
