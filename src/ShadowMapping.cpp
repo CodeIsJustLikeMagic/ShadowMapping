@@ -99,19 +99,16 @@ int main(void)
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint depthProgramID = LoadShaders("DepthRTT.vertexshader", "DepthRTT.fragmentshader");
+	GLuint depthProgramID = LoadShaders("../Shaders/DepthRTT.vertexshader", "../Shaders/DepthRTT.fragmentshader");
 
 	// Get a handle for our "MVP" uniform
 	GLuint depthMatrixID = glGetUniformLocation(depthProgramID, "depthMVP");
-
-	// Load the texture
-	GLuint Texture = loadDDS("uvmap.DDS");
 
 	// Read our .obj file
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("room_thickwalls.obj", vertices, uvs, normals);
+	bool res = loadOBJ("../Shaders/room_thickwalls.obj", vertices, uvs, normals);
 
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
@@ -177,7 +174,7 @@ int main(void)
 
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("ShadowMapping_SimpleVersion.vertexshader", "ShadowMapping_SimpleVersion.fragmentshader");
+	GLuint programID = LoadShaders("../Shaders/ShadowMapping_SimpleVersion.vertexshader", "../Shaders/ShadowMapping_SimpleVersion.fragmentshader");
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
@@ -291,13 +288,9 @@ int main(void)
 
 		// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, Texture);
+		glBindTexture(GL_TEXTURE_2D, depthTexture);
 		// Set our "myTextureSampler" sampler to use Texture Unit 0
 		glUniform1i(TextureID, 0);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, depthTexture); //bind shadow texture
-		glUniform1i(ShadowMapID, 1);
 
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
@@ -366,7 +359,6 @@ int main(void)
 	glDeleteBuffers(1, &elementbuffer);
 	glDeleteProgram(programID);
 	glDeleteProgram(depthProgramID);
-	glDeleteTextures(1, &Texture);
 
 	glDeleteFramebuffers(1, &FramebufferName);
 	glDeleteTextures(1, &depthTexture);

@@ -1,2 +1,0 @@
-D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\Debug\GLAD.pdb
-D:\Eigene Dateien\Dokumente\GitHub\ShadowMappingCOpenGL\ShadowMapping\build\GLAD.dir\Debug\GLAD.pdb
