@@ -54,11 +54,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(OpenGL REQUIRED)
 # GLM
 find_package(GLM REQUIRED)
-
 message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
-# GLFW
-#find_package(GLFW 3.0 REQUIRED)
-#message(STATUS "Found GLFW3 in ${GLFW3_INCLUDE_DIR}")
 
 find_package(ASSIMP REQUIRED)
 message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")

@@ -1,15 +1,12 @@
 ﻿// ShadowMapping.cpp : Defines the entry point for the application.
 //
 
-// Include GLEW
+// Loads opengl with glad
 #include <glad/glad.h>
 
 #include<iostream>
-#include<fstream>
-#include<sstream>
 #include<GLFW/glfw3.h>
 #include <stdlib.h>
-
 #include<vector>
 
 #define  GLM_FORCE_RADIANS
@@ -20,11 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-// Include GLFW
 GLFWwindow* window;
 
-// Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
 
@@ -38,11 +32,10 @@ using namespace glm;
 
 int main(void)
 {
-	std::cout << "Hello there, Hi, it's me" << std::endl;
+	std::cout << "Starting Shadow Mapping" << std::endl;
 	int windowWidth = 1024;
 	int windowHeight = 768;
 	//// ------- Starting Open gl and setting up a window to display things in -------------------
-	// Initialise GLFW
 	if (!glfwInit())
 	{
 		fprintf(stderr, "Failed to initialize GLFW\n");
@@ -53,48 +46,38 @@ int main(void)
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(1024, 768, "ShadowMapping :) ", NULL, NULL);
 	if (window == NULL) {
-		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
+		fprintf(stderr, "Failed to open GLFW window.\n");
 		getchar();
 		glfwTerminate();
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
 
-	//inizialize glad to show windows with :)
+	//inizialize glad to load open gl
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
 
-	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	// Hide the mouse and enable unlimited mouvement
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-	// Set the mouse at the center of the screen
+	//Input stuff
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); // capture the escape key when it gets pressed
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);// Hide the mouse 
 	glfwPollEvents();
-	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
+	glfwSetCursorPos(window, 1024 / 2, 768 / 2); // Set the mouse at the center of the screen
 
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	
+	glClearColor(0.0f, 0.0f, 0.4f, 0.0f); // Dark blue background
+	glEnable(GL_DEPTH_TEST); // Enable depth test
+	glDepthFunc(GL_LESS); // Accept fragment if it closer to the camera than the former one
+	glEnable(GL_CULL_FACE); // Cull triangles which normal is not towards the camera
 
-	// Enable depth test
-	glEnable(GL_DEPTH_TEST);
-
-	// Accept fragment if it closer to the camera than the former one
-	glDepthFunc(GL_LESS);
-
-	// Cull triangles which normal is not towards the camera
-	glEnable(GL_CULL_FACE);
-
-	GLuint VertexArrayID;
+	GLuint VertexArrayID; //create vertexArray
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
@@ -102,9 +85,9 @@ int main(void)
 	GLuint depthProgramID = LoadShaders("../Shaders/DepthShaderLightSpaceTransform.vertexshader", "../Shaders/DepthShaderDepthToTexture.fragmentshader");
 
 	// Get a handle for our "MVP" uniform
-	GLuint depthMatrixID = glGetUniformLocation(depthProgramID, "depthMVP");
+	GLuint depthMatrixID = glGetUniformLocation(depthProgramID, "depthMVP"); //MVP stands for model view projection
 
-	// Read our .obj file
+	// Read .obj file
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
@@ -116,8 +99,7 @@ int main(void)
 	std::vector<glm::vec3> indexed_normals;
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
-	// Load it into a VBO
-
+	// Load into a VBO
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -133,7 +115,6 @@ int main(void)
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, indexed_normals.size() * sizeof(glm::vec3), &indexed_normals[0], GL_STATIC_DRAW);
 
-	// Generate a buffer for the indices as well
 	GLuint elementbuffer;
 	glGenBuffers(1, &elementbuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
@@ -143,9 +124,9 @@ int main(void)
 
 
 
-	// ------Render to Depth Texture aka the Shadow Map -----------------------------
+	// ------Do the set up so we can render to Depth Texture aka render the Shadow Map -----------------------------
 
-	// The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
+	// framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
 	GLuint FramebufferName = 0;
 	glGenFramebuffers(1, &FramebufferName);
 	glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
@@ -154,13 +135,14 @@ int main(void)
 	GLuint depthTexture;
 	glGenTextures(1, &depthTexture);
 	glBindTexture(GL_TEXTURE_2D, depthTexture); // now depth Texture is bound to the target GL_Texture2D. you can only have one bound texture per target
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0); //defines a Texture image with a bunch of parameters like level or detail
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0); //defines a Texture image with a bunch of parameters like level of detail
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL); 
 
+	//when you call texture() in glsl with this texture it will compare texture with a value and return a float
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0); //add our depthTexure to the framebuffer so it can be used
@@ -168,16 +150,13 @@ int main(void)
 	// No color output in the bound framebuffer, only depth.
 	glDrawBuffer(GL_NONE); //no color buffer,pls. thank you
 
-	// Always check that our framebuffer is ok
+	// check that our framebuffer is ok
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		return false;
 
 
-	// Create and compile our GLSL program from the shaders
+	// Create and compile GLSL program from the shaders to shade the scene with shadows
 	GLuint programID = LoadShaders("../Shaders/ShadowMappingVertex.vertexshader", "../Shaders/ShadowMappingFragment.fragmentshader");
-
-	// Get a handle for our "myTextureSampler" uniform
-	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
@@ -186,10 +165,11 @@ int main(void)
 
 
 
-	//we have two shader programms. dephprogramID, which a vertexshader that only cares about depth, and a fragmentshader that does nothing
+	//we have two shader programms. dephprogramID, which a vertexshader that transforms into lightspace, and a fragmentshader that only cares about depth
 	//we also have pogramID, which renders colors, polls the depth texture and renderes the shadows.
-	do {// render a frame
+	do {// render a frame until esc is pressed
 
+		//Render Shadow map.
 		// Render to our framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
 		glViewport(0, 0, 1024, 1024); // Render on the whole framebuffer, complete from the lower left corner to the upper right
@@ -201,7 +181,7 @@ int main(void)
 		glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Use our depth shader
+		// Use our depth shader. Everything shader related that happenes after this (until another glUseProgramm) references this shader program
 		glUseProgram(depthProgramID);
 
 		
@@ -263,7 +243,6 @@ int main(void)
 		computeMatricesFromInputs(); //set viewpoint of the camera based on mouse and keyboard input. use arrow keys to move
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
 		glm::mat4 ViewMatrix = getViewMatrix();
-		//ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
 		glm::mat4 ModelMatrix = glm::mat4(1.0);
 		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
@@ -272,15 +251,14 @@ int main(void)
 			0.0, 0.5, 0.0, 0.0,
 			0.0, 0.0, 0.5, 0.0,
 			0.5, 0.5, 0.5, 1.0
-		); //multiplying vertex position by depth mvp gives values of -1 to 1. that is not usefull for texture sampling which is 0 to 1. 
-		//multipliying with this matri makes sure our results are allways 0 to 1
-		//also makes sure the UV coordinates get called correctly.
+		); //multiplying vertex position by depth mvp gives values of -1 to 1. that is not useful for texture sampling which is 0 to 1. 
+		//multipliying with this matrix makes sure our results are allways 0 to 1
+		//makes sure the UV coordinates of Texture get called correctly.
 		//middle of camera screen is 0,0 but middle of texture is 0.5,0.5
-
 		glm::mat4 depthBiasMVP = biasMatrix * depthMVP;
 
 		// Send our transformation to the currently bound shader, 
-		// in the "MVP" uniform
+		// attribut is called "MVP" in the shader
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]); //shader gets both camera mvp and depth mvp. 
 		//neeeds depth mvp so it can look at the fragments from lights point of view to see where they are on the shadow texture
 		//that way it can tell if they are in shadow or not.
@@ -288,10 +266,14 @@ int main(void)
 
 		// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, depthTexture);
-		// Set our "myTextureSampler" sampler to use Texture Unit 0
-		glUniform1i(TextureID, 0);
+		glBindTexture(GL_TEXTURE_2D, depthTexture);//depth Texture in Shader is sampler2DShadow.
+		//texture gets treated like ShadowTexture, which changes a few things when you sample form it
+		glUniform1i(ShadowMapID, 0);
 
+		//arent giving the fragment shader a texture because we just color everything as red.
+		//but this is where you would add a texture.
+
+		//draw all the things (vertices, UVs, normals, )
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -328,10 +310,7 @@ int main(void)
 			(void*)0                          // array buffer offset
 		);
 
-		// Index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-
-		// Draw the triangles of our imported .obj file
 		glDrawElements(
 			GL_TRIANGLES,      // mode
 			indices.size(),    // count
@@ -366,7 +345,6 @@ int main(void)
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
 
-	std::cout << "I'm the addstronaut. Out here in addspace" << std::endl;
 	return 0;
 }
 
