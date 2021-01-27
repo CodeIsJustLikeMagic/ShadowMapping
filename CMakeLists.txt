@@ -41,12 +41,7 @@ INCLUDE_DIRECTORIES(
 
     ${MY_PROJECT_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/src
-	${CMAKE_SOURCE_DIR}/include
-    external/AntTweakBar-1.16/include/
-	external/glfw-3.1.2/include/
-	external/glm-0.9.7.1/
-	external/assimp-3.0.1270/include/
-	external/bullet-2.81-rev2613/src/
+    ${MY_PROJECT_INCLUDE_DIR}/glfw-3.1.2/include
 
 )
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
@@ -56,25 +51,15 @@ find_package(OpenGL REQUIRED)
 find_package(GLM REQUIRED)
 message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
 
-find_package(ASSIMP REQUIRED)
-message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
-# Put all libraries into a variable
-
 # STB_IMAGE
 add_library(STB_IMAGE "thirdparty/stb_image.cpp")
 
 # GLAD
 add_library(GLAD "thirdparty/glad.c")
 
-set(LIBS opengl32 assimp STB_IMAGE GLAD)
+set(LIBS opengl32 STB_IMAGE GLAD)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
-
-LINK_DIRECTORIES(
-
-    ${CMAKE_SOURCE_DIR}/lib # add lib files
-
-)
 
 
 ADD_EXECUTABLE(${PROJECT_NAME}
